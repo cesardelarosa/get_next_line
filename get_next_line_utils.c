@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/18 12:55:57 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:00:17 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,10 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	len;
 
+	if (!str)
+		return (0);
 	len = 0;
 	while (str[len])
-		len++;
-	return (len);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
-{
-	size_t	len;
-
-	len = 0;
-	while (len < n - 1 && src[len])
-	{
-		dest[len] = src[len];
-		len++;
-	}
-	dest[len] = '\0';
-	while (src[len])
 		len++;
 	return (len);
 }
@@ -43,18 +29,24 @@ char	*ft_strndup(const char *s, size_t n)
 	char	*r;
 	size_t	l;
 
+	if (!s)
+		return (NULL);
 	l = ft_strlen(s);
 	if (l > n)
 		l = n;
 	r = (char *)malloc((l + 1) * sizeof(char));
 	if (!r)
 		return (NULL);
-	ft_strlcpy(r, s, l + 1);
+	r[l] = '\0';
+	while (l--)
+		r[l] = s[l];
 	return (r);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (1)
 	{
 		if (*s == (char)c)
@@ -63,25 +55,6 @@ char	*ft_strchr(const char *s, int c)
 			return (NULL);
 		s++;
 	}
-}
-
-size_t	ft_strlcat(char *dest, const char *src, size_t n)
-{
-	size_t	d_len;
-	size_t	s_len;
-
-	d_len = 0;
-	s_len = 0;
-	while (d_len < n && dest[d_len])
-		d_len++;
-	while (src[s_len] && d_len + s_len + 1 < n)
-	{
-		dest[d_len + s_len] = src[s_len];
-		s_len++;
-	}
-	if (d_len < n)
-		dest[d_len + s_len] = '\0';
-	return (d_len + ft_strlen(src));
 }
 
 char	*ft_strjoin(const char *s1, const char *s2)
@@ -95,7 +68,10 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	r = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!r)
 		return (NULL);
-	ft_strlcpy(r, s1, len1 + 1);
-	ft_strlcat(r, s2, len1 + len2 + 1);
+	r[len1 + len2] = '\0';
+	while (len2--)
+		r[len1 + len2] = s2[len2];
+	while (len1--)
+		r[len1] = s1[len1];
 	return (r);
 }

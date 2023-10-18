@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:42 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/18 17:38:28 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:00:24 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@
 # include <fcntl.h>
 
 size_t	ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dest, const char *src, size_t n);
-char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strchr(const char *s, int c);
-size_t	ft_strlcat(char *dest, const char *src, size_t n);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*get_next_line(int fd);
 

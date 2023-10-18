@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/18 18:28:17 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:00:21 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*r;
 
-	r = (char *)malloc(sizeof(char));
-	*r = '\0';
+	r = NULL;
 	if (jump && jump < &buffer[BUFFER_SIZE + 1])
 	{
 		r = ft_strjoin(r, ++jump);
