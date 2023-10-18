@@ -6,26 +6,41 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/05 13:54:11 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:16:26 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*read_line(int fd)
+{
+	static char	jump;
+	static char	buffer[BUFFER_SIZE];
+	char	 	r;
+	int			line;
+
+	line = 0;
+	while (!line)
+	{
+		read(fd, &buffer[pos], BUFFER_SIZE);
+		strjoin(r, buffer);
+		if (pos == strchr(buffer))
+			line = 1;
+	}
+}
+
+char	*only_line(char *str)
+{
+	char	*r;
+
+
+}
+
 char	*get_next_line(int fd)
 {
-	static char	*mem;
-	char		buffer[BUFFER_SIZE + 1];
-	int			size;
-	char		*tmp;
+	char		*r;
 
-	if (fd < 0)
-		return (-1);
-	while ((size = read(fd, buffer, BUFFER_SIZE)) > 0)
-	{
+	r = read_line(fd);
 
-	}
-	if (size < 0)
-		return (-1);
-	if (size == 
+	return (r);
 }

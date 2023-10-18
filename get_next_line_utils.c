@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/05 10:30:16 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:31:27 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 	while (src[len])
 		len++;
 	return (len);
+}
+
+char	*ft_strdnup(const char *s, size_t n)
+{
+	char	*r;
+	size_t	l;
+
+	l = ft_strlen(s);
+	if (l > n)
+		l = n;
+	r = (char *)malloc((l + 1) * sizeof(char));
+	if (!r)
+		return (NULL);
+	ft_strlcpy(r, s, l + 1);
+	return (r);
 }
 
 char	*ft_strchr(const char *s, int c)
