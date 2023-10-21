@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/21 21:10:24 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/21 21:13:51 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ char	*get_next_line(int fd)
 	if (jump && *jump)
 	{
 		r = ft_strjoin(r, jump);
-		if (!r)
-		{
-			free(r);
-			return (NULL);
-		}
 		jump = ft_strchr(jump, '\n');
 		if (jump)
 			return (r);
@@ -35,18 +30,8 @@ char	*get_next_line(int fd)
 	while (read(fd, buffer, BUFFER_SIZE) > 0 && !jump)
 	{
 		r = ft_strjoin(r, buffer);
-		if (!r)
-		{
-			free (r);
-			return (NULL);
-		}
 		jump = ft_strchr(buffer, '\n');
 	}
 	r = ft_strndup(r, ft_strchr(r, '\n') - r + 1);
-	if (!r)
-	{
-		free (r);
-		return (NULL);
-	}
 	return (r);
 }
