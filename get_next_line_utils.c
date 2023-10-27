@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/21 21:13:48 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:10:39 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	len2 = ft_strlen(s2);
 	r = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!r)
+	{
+		free(r);
 		return (NULL);
+	}
 	r[len1 + len2] = '\0';
 	while (len2--)
 		r[len1 + len2] = s2[len2];
