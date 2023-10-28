@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/27 07:10:39 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/28 13:31:06 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ char	*ft_strchr(const char *s, int c)
 {
 	if (!s)
 		return (NULL);
-	while (1)
+	while (*s)
 	{
 		if (*s == (char)c)
 			return ((char *)s);
-		if (*s == '\0')
-			return (NULL);
 		s++;
 	}
+	return (NULL);
 }
 
 char	*ft_strjoin(const char *s1, const char *s2)
@@ -63,14 +62,13 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t	len1;
 	size_t	len2;
 
+	if (!s1 && !s2)
+		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	r = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!r)
-	{
-		free(r);
 		return (NULL);
-	}
 	r[len1 + len2] = '\0';
 	while (len2--)
 		r[len1 + len2] = s2[len2];

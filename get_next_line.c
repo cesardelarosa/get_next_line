@@ -6,11 +6,10 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/27 08:42:41 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/28 13:38:41 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "get_next_line.h"
 
 void	trim_till_jump(char **r)
@@ -19,6 +18,8 @@ void	trim_till_jump(char **r)
 	char	*jump;
 	size_t	len;
 
+	if (!r || !*r)
+		return ;
 	jump = ft_strchr(*r, '\n');
 	if (!jump)
 		return ;
@@ -26,7 +27,10 @@ void	trim_till_jump(char **r)
 	trim = ft_strndup(*r, len + 1);
 	free(*r);
 	if (!trim)
+	{
+		*r = NULL;
 		return ;
+	}
 	*r = trim;
 }
 
@@ -35,20 +39,22 @@ void	read_buffer(int fd, char *buffer, char **r, char **jump)
 	int		bytes;
 	char	*tmp;
 
-	bytes = 1;
-	while (!*jump && bytes)
+	while (!*jump)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes < 0)
+		if (bytes == -1)
 		{
 			free(*r);
-			break ;
+			*r = NULL;
 		}
+		if (bytes <= 0)
+			break ;
+		buffer[bytes] = '\0';
 		tmp = ft_strjoin(*r, buffer);
 		free(*r);
-		if (!tmp || !*tmp)
+		if (!tmp)
 		{
-			free(tmp);
+			*r = NULL;
 			break ;
 		}
 		*r = tmp;
@@ -74,8 +80,11 @@ char	*get_next_line(int fd)
 		jump = ft_strchr(jump + 1, '\n');
 	}
 	read_buffer(fd, buffer, &r, &jump);
-	if (!jump)
+	if (r && !*r)
+	{
+		free(r);
 		return (NULL);
+	}
 	trim_till_jump(&r);
 	return (r);
 }
