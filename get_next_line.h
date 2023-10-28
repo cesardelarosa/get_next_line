@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:42 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/28 13:31:00 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/28 13:46:09 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include <stdio.h>
-# include <fcntl.h>
 
 size_t	ft_strlen(const char *str);
 char	*ft_strndup(const char *s, size_t n);
