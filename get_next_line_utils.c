@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/28 13:45:17 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:24:43 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,19 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-char	*ft_strndup(const char *s, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	void	*r;
+
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	r = dest;
+	while (n--)
+		*(unsigned char *)dest++ = *(const unsigned char *)src++;
+	return (r);
+}
+
+char	*ft_strdup(const char *s)
 {
 	char	*r;
 	size_t	l;
@@ -32,14 +44,12 @@ char	*ft_strndup(const char *s, size_t n)
 	if (!s)
 		return (NULL);
 	l = ft_strlen(s);
-	if (l > n)
-		l = n;
 	r = (char *)malloc((l + 1) * sizeof(char));
-	if (!r)
-		return (NULL);
-	r[l] = '\0';
-	while (l--)
-		r[l] = s[l];
+	if (r)
+	{
+		ft_memcpy(r, s, l);
+		r[l] = '\0';
+	}
 	return (r);
 }
 
@@ -56,23 +66,25 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_str_realloc(char *str, size_t l)
 {
-	char	*r;
-	size_t	len1;
-	size_t	len2;
+	void	*r;
+	size_t	old_l;
 
-	if (!s1 && !s2)
+	if (!l)
+	{
+		free(str);
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	r = (char *)malloc((len1 + len2 + 1) * sizeof(char));
+	}
+	r = (char *)malloc(l * sizeof(char));
 	if (!r)
 		return (NULL);
-	r[len1 + len2] = '\0';
-	while (len2--)
-		r[len1 + len2] = s2[len2];
-	while (len1--)
-		r[len1] = s1[len1];
+	if (!str)
+		return (r);
+	old_l = ft_strlen(str);
+	if (old_l < l)
+		l = old_l;
+	ft_memcpy(r, str, l);
+	free(str);
 	return (r);
 }

@@ -6,60 +6,36 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/28 13:38:41 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:25:36 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	trim_till_jump(char **r)
+char	*check_old_buffer(char **jump)
 {
-	char	*trim;
-	char	*jump;
-	size_t	len;
+	char	*r;
 
-	if (!r || !*r)
-		return ;
-	jump = ft_strchr(*r, '\n');
-	if (!jump)
-		return ;
-	len = jump - *r;
-	trim = ft_strndup(*r, len + 1);
-	free(*r);
-	if (!trim)
+	r = NULL;
+	if (*jump)
 	{
-		*r = NULL;
-		return ;
+		r = ft_strdup(*jump + 1);
+		if (!r)
+			return (NULL);
+		*jump = ft_strchr(*jump + 1, '\n');
 	}
-	*r = trim;
+	return (r);
 }
 
-void	read_buffer(int fd, char *buffer, char **r, char **jump)
+void	trim_r(char *r)
 {
-	int		bytes;
-	char	*tmp;
+	char	*trim;
 
-	while (!*jump)
-	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
-		{
-			free(*r);
-			*r = NULL;
-		}
-		if (bytes <= 0)
-			break ;
-		buffer[bytes] = '\0';
-		tmp = ft_strjoin(*r, buffer);
-		free(*r);
-		if (!tmp)
-		{
-			*r = NULL;
-			break ;
-		}
-		*r = tmp;
-		*jump = ft_strchr(buffer, '\n');
-	}
+	trim = ft_strchr(r, '\n');
+	if (!trim)
+		return ;
+	while (*trim++)
+		*trim = '\0';
 }
 
 char	*get_next_line(int fd)
@@ -67,24 +43,26 @@ char	*get_next_line(int fd)
 	static char	*jump;
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*r;
-	char		*tmp;
+	int			bytes;
+	size_t		l;
 
-	r = NULL;
-	if (jump)
+	r = check_old_buffer(&jump);
+	while (!jump)
 	{
-		tmp = ft_strjoin(r, jump + 1);
-		free(r);
-		if (!tmp)
-			return (NULL);
-		r = tmp;
-		jump = ft_strchr(jump + 1, '\n');
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes <= 0)
+			break ;
+		buffer[bytes] = '\0';
+		l = ft_strlen(r);
+		r = ft_str_realloc(r, l + bytes + 1);
+		ft_memcpy(r + l, buffer, bytes + 1);
+		jump = ft_strchr(buffer, '\n');
 	}
-	read_buffer(fd, buffer, &r, &jump);
-	if (r && !*r)
+	if ((r && !*r) || bytes == -1)
 	{
 		free(r);
 		return (NULL);
 	}
-	trim_till_jump(&r);
+	trim_r(r);
 	return (r);
 }
