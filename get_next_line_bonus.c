@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 14:43:03 by cde-la-r         ###   ########.fr       */
+/*   Created: 2023/11/02 14:48:26 by cde-la-r          #+#    #+#             */
+/*   Updated: 2023/11/02 14:54:22 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*remains;
+	static char	*remains[1024];
 	char		*line;
 
-	line = read_line(remains, fd);
+	line = read_line(remains[fd], fd);
 	if (!line)
 	{
-		remains = NULL;
+		remains[fd] = NULL;
 		return (NULL);
 	}
-	remains = save_remains(line);
+	remains[fd] = save_remains(line);
 	return (line);
 }
 
