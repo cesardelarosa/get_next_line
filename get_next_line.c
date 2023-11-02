@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 14:43:03 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:06:15 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,15 @@ char	*read_line(char *line, int fd)
 	while (!ft_strchr(line, '\n'))
 	{
 		nbytes = read(fd, buffer, BUFFER_SIZE);
-		if (nbytes == 0)
-			return (line);
-		if (nbytes == -1)
-		{
-			free(line);
-			line = NULL;
-			return (NULL);
-		}
+		if (nbytes < 1)
+			break ;
 		buffer[nbytes] = '\0';
 		line = ft_strjoin(line, buffer);
-		if (!line)
-			return (NULL);
+	}
+	if (nbytes == -1)
+	{
+		free(line);
+		line = NULL;
 	}
 	return (line);
 }
@@ -60,8 +57,6 @@ char	*save_remains(char *line)
 	if (!new_line)
 		return (NULL);
 	remains = ft_strdup(new_line + 1);
-	if (!remains)
-		return (NULL);
 	*(new_line + 1) = '\0';
 	return (remains);
 }
