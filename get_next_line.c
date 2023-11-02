@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/28 19:25:36 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/10/29 01:01:09 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,38 @@ char	*check_old_buffer(char **jump)
 	return (r);
 }
 
-void	trim_r(char *r)
+char	*read_buffer(int fd)
 {
-	char	*trim;
+	char	*buffer;
+	int		bytes;
 
-	trim = ft_strchr(r, '\n');
-	if (!trim)
-		return ;
-	while (*trim++)
-		*trim = '\0';
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	bytes = read(fd, buffer, BUFFER_SIZE);
+	if (bytes == -1)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	buffer[bytes] = '\0';
+	return (buffer);
+}
+
+char	*expand_r(char *str, char *buffer)
+{
+	char	*r;
+	size_t	r_len;
+	size_t	buff_len;
+
+	if (!str || !buffer)
+		return (NULL);
+	r_len = ft_strlen(str);
+	buff_len = ft_strlen(buffer);
+	r = ft_str_realloc(str, r_len + buff_len + 1);
+	if (r)
+		ft_memcpy(r + r_len, buffer, buff_len + 1);
+	return (r);
 }
 
 char	*get_next_line(int fd)
@@ -43,26 +66,19 @@ char	*get_next_line(int fd)
 	static char	*jump;
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*r;
-	int			bytes;
-	size_t		l;
 
 	r = check_old_buffer(&jump);
 	while (!jump)
 	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes <= 0)
-			break ;
-		buffer[bytes] = '\0';
-		l = ft_strlen(r);
-		r = ft_str_realloc(r, l + bytes + 1);
-		ft_memcpy(r + l, buffer, bytes + 1);
+		buffer = read_buffer(fd);
+		r = expand_r(r, buffer);
+		if (!buffer)
+		{
+			free(r);
+			return (NULL);
+		}
 		jump = ft_strchr(buffer, '\n');
 	}
-	if ((r && !*r) || bytes == -1)
-	{
-		free(r);
-		return (NULL);
-	}
-	trim_r(r);
+	*(char *)(ft_strchr(r, '\n') + 1)= '\0';
 	return (r);
 }
