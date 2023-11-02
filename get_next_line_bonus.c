@@ -6,15 +6,15 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:48:26 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 14:54:22 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:11:40 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*remains[1024];
+	static char	*remains[MAX_FD];
 	char		*line;
 
 	line = read_line(remains[fd], fd);

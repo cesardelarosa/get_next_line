@@ -6,12 +6,14 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:48:43 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 14:51:50 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:15:44 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
+
+# define MAX_FD 12288
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
