@@ -6,12 +6,17 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/10/29 01:01:09 by cde-la-r         ###   ########.fr       */
+=======
+/*   Updated: 2023/11/02 17:35:15 by cde-la-r         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+<<<<<<< HEAD
 char	*check_old_buffer(char **jump)
 {
 	char	*r;
@@ -66,10 +71,17 @@ char	*get_next_line(int fd)
 	static char	*jump;
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*r;
+=======
+char	*get_next_line(int fd)
+{
+	static char	*remains;
+	char		*line;
+>>>>>>> refs/remotes/origin/master
 
-	r = check_old_buffer(&jump);
-	while (!jump)
+	line = read_line(remains, fd);
+	if (!line)
 	{
+<<<<<<< HEAD
 		buffer = read_buffer(fd);
 		r = expand_r(r, buffer);
 		if (!buffer)
@@ -81,4 +93,45 @@ char	*get_next_line(int fd)
 	}
 	*(char *)(ft_strchr(r, '\n') + 1)= '\0';
 	return (r);
+=======
+		remains = NULL;
+		return (NULL);
+	}
+	remains = save_remains(line);
+	return (line);
+}
+
+char	*read_line(char *line, int fd)
+{
+	char	buffer[BUFFER_SIZE + 1];
+	int		nbytes;
+
+	while (!ft_strchr(line, '\n'))
+	{
+		nbytes = read(fd, buffer, BUFFER_SIZE);
+		if (nbytes < 1)
+			break ;
+		buffer[nbytes] = '\0';
+		line = ft_strjoin(line, buffer);
+	}
+	if (nbytes == -1)
+	{
+		free(line);
+		line = NULL;
+	}
+	return (line);
+}
+
+char	*save_remains(char *line)
+{
+	char	*new_line;
+	char	*remains;
+
+	new_line = ft_strchr(line, '\n');
+	if (!new_line)
+		return (NULL);
+	remains = ft_strdup(new_line + 1);
+	*(new_line + 1) = '\0';
+	return (remains);
+>>>>>>> refs/remotes/origin/master
 }
