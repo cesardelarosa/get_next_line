@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:54:44 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/10/28 19:24:43 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:31:25 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,20 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	void	*r;
-
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	r = dest;
-	while (n--)
-		*(unsigned char *)dest++ = *(const unsigned char *)src++;
-	return (r);
-}
-
 char	*ft_strdup(const char *s)
 {
 	char	*r;
 	size_t	l;
 
-	if (!s)
+	if (!s || !*s)
 		return (NULL);
 	l = ft_strlen(s);
 	r = (char *)malloc((l + 1) * sizeof(char));
-	if (r)
-	{
-		ft_memcpy(r, s, l);
-		r[l] = '\0';
-	}
+	if (!r)
+		return (NULL);
+	r[l] = '\0';
+	while (l--)
+		r[l] = s[l];
 	return (r);
 }
 
@@ -66,25 +54,29 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_str_realloc(char *str, size_t l)
+char	*ft_strjoin(char *s1, const char *s2)
 {
-	void	*r;
-	size_t	old_l;
+	char	*r;
+	size_t	len1;
+	size_t	len2;
 
-	if (!l)
+	if (!s1 && !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	r = (char *)malloc((len1 + len2 + 1) * sizeof(char));
+	if (!r)
 	{
-		free(str);
+		if (s1)
+			free(s1);
 		return (NULL);
 	}
-	r = (char *)malloc(l * sizeof(char));
-	if (!r)
-		return (NULL);
-	if (!str)
-		return (r);
-	old_l = ft_strlen(str);
-	if (old_l < l)
-		l = old_l;
-	ft_memcpy(r, str, l);
-	free(str);
+	r[len1 + len2] = '\0';
+	while (len2--)
+		r[len1 + len2] = s2[len2];
+	while (len1--)
+		r[len1] = s1[len1];
+	if (s1)
+		free(s1);
 	return (r);
 }
