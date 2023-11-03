@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:48:26 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 17:19:16 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:03:46 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,46 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*remains[MAX_FD];
+	static char	*tail[OPEN_MAX];
 	char		*line;
 
-	line = read_line(remains[fd], fd);
-	if (!line)
-	{
-		remains[fd] = NULL;
+	if (fd < 0 || fd >= OPEN_MAX)
 		return (NULL);
-	}
-	remains[fd] = save_remains(line);
+	line = read_line(tail[fd], fd);
+	tail[fd] = save_tail(line);
 	return (line);
 }
 
 char	*read_line(char *line, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
-	int		nbytes;
+	ssize_t	nbytes;
 
 	while (!ft_strchr(line, '\n'))
 	{
 		nbytes = read(fd, buffer, BUFFER_SIZE);
-		if (nbytes < 1)
+		if (nbytes == 0)
 			break ;
+		if (nbytes == -1)
+		{
+			free(line);
+			return (NULL);
+		}
 		buffer[nbytes] = '\0';
 		line = ft_strjoin(line, buffer);
-	}
-	if (nbytes == -1)
-	{
-		free(line);
-		line = NULL;
 	}
 	return (line);
 }
 
-char	*save_remains(char *line)
+char	*save_tail(char *line)
 {
-	char	*new_line;
-	char	*remains;
+	char	*next;
+	char	*tail;
 
-	new_line = ft_strchr(line, '\n');
-	if (!new_line)
+	next = ft_strchr(line, '\n');
+	if (!next++)
 		return (NULL);
-	remains = ft_strdup(new_line + 1);
-	*(new_line + 1) = '\0';
-	return (remains);
+	tail = ft_strdup(next);
+	*next = '\0';
+	return (tail);
 }
