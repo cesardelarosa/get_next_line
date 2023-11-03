@@ -32,15 +32,15 @@ char	*read_line(char *line, int fd)
 	while (!ft_strchr(line, '\n'))
 	{
 		nbytes = read(fd, buffer, BUFFER_SIZE);
-		if (nbytes < 1)
+		if (nbytes == 0)
 			break ;
+		if (nbytes == -1)
+		{
+			free(line);
+			return (NULL);
+		}
 		buffer[nbytes] = '\0';
 		line = ft_strjoin(line, buffer);
-	}
-	if (nbytes < 0)
-	{
-		free(line);
-		return (NULL);
 	}
 	return (line);
 }
