@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:42 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 14:45:52 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:21:31 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, const char *s2);
 char	*get_next_line(int fd);
 char	*read_line(char *line, int fd);
-char	*save_remains(char *line);
+char	*save_tail(char *line);
 
 #endif

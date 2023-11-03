@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 04:50:34 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/02 17:35:15 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:09:28 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*remains;
+	static char	*tail;
 	char		*line;
 
-	line = read_line(remains, fd);
-	if (!line)
-	{
-		remains = NULL;
-		return (NULL);
-	}
-	remains = save_remains(line);
+	line = read_line(tail, fd);
+	tail = save_tail(line);
 	return (line);
 }
 
 char	*read_line(char *line, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
-	int		nbytes;
+	ssize_t	nbytes;
 
 	while (!ft_strchr(line, '\n'))
 	{
@@ -40,23 +35,23 @@ char	*read_line(char *line, int fd)
 		buffer[nbytes] = '\0';
 		line = ft_strjoin(line, buffer);
 	}
-	if (nbytes == -1)
+	if (nbytes < 0)
 	{
 		free(line);
-		line = NULL;
+		return (NULL);
 	}
 	return (line);
 }
 
-char	*save_remains(char *line)
+char	*save_tail(char *line)
 {
-	char	*new_line;
-	char	*remains;
+	char	*next;
+	char	*tail;
 
-	new_line = ft_strchr(line, '\n');
-	if (!new_line)
+	next = ft_strchr(line, '\n');
+	if (!next++)
 		return (NULL);
-	remains = ft_strdup(new_line + 1);
-	*(new_line + 1) = '\0';
-	return (remains);
+	tail = ft_strdup(next);
+	*next = '\0';
+	return (tail);
 }
