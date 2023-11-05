@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:48:43 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/03 10:03:54 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:17:23 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 256
+# endif
 
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);

@@ -6,7 +6,7 @@
 /*   By: cde-la-r <cde-la-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:24:52 by cde-la-r          #+#    #+#             */
-/*   Updated: 2023/11/03 10:27:08 by cde-la-r         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:30:55 by cde-la-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(void)
 	char	filename[256];
 	int		fd;
 	char	*line;
+	int		fds[1024] = {0};
+	int		i;
 
 	while (1)
 	{
@@ -30,7 +32,9 @@ int	main(void)
 			return (0);
 		if (strcmp(filename, "exit") == 0)
 			return (0);
-		fd = open(filename, O_RDONLY);
+		i = 0;
+		if (!fds[fd])
+			fd = open(filename, O_RDONLY);
 		if (fd == -1)
 		{
 			fprintf(stderr, "No se pudo abrir el archivo: %s\n", filename);
@@ -44,7 +48,22 @@ int	main(void)
 		}
 		printf("Línea leída: %s\n", line);
 		free(line);
-		close(fd);
+		i = 0;
+		while (i < 1024)
+		{
+			if (i == fd)
+			{
+				fds[i] = 1;
+				break;
+			}
+			i++;
+		}
+	}
+	i = 1024;
+	while (i--)
+	{
+		if (fds[i] == 1)
+			close(fds[i]);
 	}
 	return (0);
 }
