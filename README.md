@@ -27,5 +27,7 @@ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.
 ```
 
 ### Compile and Run get_next_line_bonus
-
+```bash
+gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c tests/main_bonus.c
+```
 ## Personal
