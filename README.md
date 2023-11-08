@@ -31,3 +31,5 @@ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.
 gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c tests/main_bonus.c
 ```
 ## Personal
+
+I spent more time trying to make the functions simple than making a code that passed testers, since i read the proyect, I thought code had to be very easy but at first it didn't. Most codes I read on github seemed to me very complicated. In [simple_idea.c](https://www.github.com/cesardelarosa/get_next_line/simple_idea.c) I write in one function with less than 25 lines a perfect functional and clear function that works. The only inconviniet is that it does two assignments in an if control struct. However, I think it is very pedagogic to read that code.
