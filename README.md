@@ -10,6 +10,8 @@ A function designed to read a file and retrieve its lines sequentially. It start
 
 `char *save_tail(char *line)` makes line end with the first '\n' char and returns the rest of the line that is not returned.
 
+The rest of the functions are contained in [libft](https://www.github.com/cesardelarosa/Libft), except a small change in `ft_strjoin` that frees the first input strring.
+
 Bonus part requires using only one static variable and saving tails for each fd value used.
 ## Usage
 
