@@ -17,6 +17,8 @@ Bonus part requires using only one static variable and saving tails for each fd 
 
 ### Download
 
+```git clone https://github.com/cesardelarosa/get_next_line.git get_next_line```
+
 ### Compile and Run get_next_line
 
 ### Compile and Run get_next_line_bonus
