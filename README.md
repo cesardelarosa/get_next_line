@@ -23,7 +23,7 @@ git clone https://github.com/cesardelarosa/get_next_line.git get_next_line
 
 ### Compile and Run get_next_line
 ```bash
-gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c tests/main.c -o gnl && ./gnl
+gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c tests/main.c -o gnl && ./gnl tests/a.txt
 ```
 
 ### Compile and Run get_next_line_bonus
